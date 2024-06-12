@@ -1,5 +1,5 @@
 import { connect_to_db } from "@/db/dbConnect";
-import user from "@/model/dbModel";
+import User from "@/model/dbModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { sendEmail } from "@/helpers/mailer";
@@ -11,7 +11,7 @@ export const POST = async (req: NextRequest) => {
     try {
         const reqbody = await req.json()
         const { username, email, password } = reqbody
-        const userExist = await user.findOne({
+        const userExist = await User.findOne({
             email
         })
         if (userExist) {
@@ -19,7 +19,7 @@ export const POST = async (req: NextRequest) => {
         }
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
-        const newUser = new user({
+        const newUser = new User({
             username,
             email,
             password: hashedPassword
