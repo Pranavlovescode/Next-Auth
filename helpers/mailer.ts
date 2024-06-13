@@ -6,13 +6,13 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
     try {
         if(emailType==="VERIFY"){
             // const hashedToken = await bcrypt.hash(userId.toString(),10)
-            await User.findbyIdAndUpdate(userId,{
+            await User.findByIdAndUpdate(userId,{
                 verifiedToken:uuidv4(),
                 verifiedTokenExpire:Date.now()+3600000
             })
         }else if(emailType==="FORGET"){
             // const hashedToken = await bcrypt.hash(userId.toString(),10)
-            await User.findbyIdAndUpdate(userId,{
+            await User.findByIdAndUpdate(userId,{
                 forgetPasswordToken:uuidv4(),
                 forgetPasswordTokenExpire:Date.now()+3600000
             })
@@ -35,7 +35,7 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
         });
         return info
     } catch (error) {
-        console.log("Error in sending email");
+        console.log("Error in sending email"+ error);
         
     }
 }
