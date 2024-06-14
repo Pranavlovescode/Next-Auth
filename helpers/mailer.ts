@@ -4,16 +4,17 @@ import {v4 as uuidv4} from 'uuid'
 export const sendEmail = async ({ email, emailType, userId }: any) => {
     // Do this on later stage
     try {
+        const token = uuidv4()
         if(emailType==="VERIFY"){
             // const hashedToken = await bcrypt.hash(userId.toString(),10)
             await User.findByIdAndUpdate(userId,{
-                verifiedToken:uuidv4(),
+                verifiedToken:token,
                 verifiedTokenExpire:Date.now()+3600000
             })
         }else if(emailType==="FORGET"){
             // const hashedToken = await bcrypt.hash(userId.toString(),10)
             await User.findByIdAndUpdate(userId,{
-                forgetPasswordToken:uuidv4(),
+                forgetPasswordToken:token,
                 forgetPasswordTokenExpire:Date.now()+3600000
             })
         }
@@ -31,7 +32,8 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
             to: email, // list of receivers
             subject: "Hello ✔", // Subject line
             text: "Hello world?", // plain text body
-            html: "<b>Hello world?</b>", // html body
+            html: `<h1>Your verification token</h1>
+                    <p>http://localhost:3000/api/${token}</p>`, // html body
         });
         return info
     } catch (error) {
