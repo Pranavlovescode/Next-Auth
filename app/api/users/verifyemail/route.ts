@@ -9,16 +9,17 @@ export const POST = async (req:NextRequest)=>{
         const reqbody = await req.json()
         const {token} = reqbody
         console.log(token);
-        const user_token = User.findOne({verifiedToken:token},{verifiedTokenExpire:{$gt:Date.now()}})
+        const user_token = await User.findOne({verifiedToken:token, verifiedTokenExpire:{$gt:Date.now()}})
         if(!user_token){
             return NextResponse.json({error:"Invalid token"},{status:400})
         }
-        console.log(user_token)
+        
         user_token.isVerified = true
         user_token.verifiedToken = undefined
         user_token.verifiedTokenExpire = undefined
 
         await user_token.save()
+        console.log(user_token)
         return NextResponse.json({message:"Email verified successfully"},{status:200})
 
     } catch (error:any) {
