@@ -1,4 +1,7 @@
+"use client"
+
 export default function Login() {
+  
   return (
     <main className="text-center">
       <h1 className="text-3xl font-bold m-3">Login</h1>
