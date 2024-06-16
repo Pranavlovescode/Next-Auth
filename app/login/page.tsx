@@ -7,9 +7,14 @@ type Form = {
   email: string;
   password: string;
 };
+type Error={
+  error:string
+
+}
 export default function Login() {
   const router = useRouter()
   const [loading, setLoading]=useState(false)
+  const [error, setError] = useState<Error>({error:''})
   const [formData, setFormData] = useState<Form>({
     email: "",
     password: "",
@@ -26,7 +31,8 @@ export default function Login() {
       }
       router.push('/')
     } catch (error: any) {
-      console.log(error);
+      console.log(error.response.data);
+      setError(error.response.data)
     }
   };
   useEffect(() => {
@@ -36,6 +42,7 @@ export default function Login() {
     <main className="text-center">
       <h1 className="text-3xl font-bold m-3">Login</h1>
       <h1>{loading?"Processing":" "}</h1>
+      {error.error &&<h1 className="text-red-700">{error.error}</h1>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
         <input

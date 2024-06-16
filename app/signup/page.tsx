@@ -7,6 +7,10 @@ type Form = {
   email:string;
   password:string;
 }
+type Error={
+  error:string
+
+}
 export default function Signup() {
   const router = useRouter()
   const [formData, setFormData] = useState<Form>({
@@ -14,6 +18,7 @@ export default function Signup() {
     email:"",
     password:"",
   });
+  const [error, setError] = useState<Error>({error:''})
   const [loading, setLoading] = useState(false)
   const handleSubmitForm = async(e:any)=>{
     setLoading(true)
@@ -27,7 +32,9 @@ export default function Signup() {
       }
       router.push('/')
     } catch (error: any) {
-      console.log(error);
+      const errorMsg = error.response.data
+      setError(errorMsg)
+      console.log(errorMsg);
     }
   }
 
@@ -35,6 +42,7 @@ export default function Signup() {
     <main className="text-center">
       <h1 className="text-3xl font-bold m-3">Sign Up</h1>
       <h1>{loading?"Processing":" "}</h1>
+      <h1>{error.error}</h1>
       <form className="" onSubmit={handleSubmitForm}>
         <label htmlFor="username">Username</label>
         <input
@@ -64,6 +72,7 @@ export default function Signup() {
           Sumbit
         </button>
       </form>
+      
     </main>
   );
 }
