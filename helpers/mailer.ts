@@ -33,7 +33,7 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
             subject: `Hello User`, // Subject line
             text: "Hello world?", // plain text body
             html: `<h1>Your verification token</h1>
-                    <p>http://localhost:3000/api/users/verifyemail/${token}</p>`, // html body
+                    <p>http://localhost:3000/verifyemail/${token}</p>`, // html body
         });
         return info
     } catch (error) {
