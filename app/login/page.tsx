@@ -29,7 +29,7 @@ export default function Login() {
       if (response.data) {
         console.log("Login Success",response.data);        
       }
-      router.push('/')
+      router.push('/dashboard')
     } catch (error: any) {
       console.log(error.response.data);
       setError(error.response.data)
@@ -39,7 +39,7 @@ export default function Login() {
     handleSubmit;
   }, []);
   return (
-    <main className="text-center">
+    <main className="text-center place-items-center">
       <h1 className="text-3xl font-bold m-3">Login</h1>
       <h1>{loading?"Processing":" "}</h1>
       {error.error &&<h1 className="text-red-700">{error.error}</h1>}

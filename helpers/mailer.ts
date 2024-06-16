@@ -30,10 +30,10 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
         const info = await transporter.sendMail({
             from: '"Maddison Foo Koch 👻" <maddison53@ethereal.email>', // sender address
             to: email, // list of receivers
-            subject: "Hello ✔", // Subject line
+            subject: `Hello User`, // Subject line
             text: "Hello world?", // plain text body
             html: `<h1>Your verification token</h1>
-                    <p>http://localhost:3000/api/${token}</p>`, // html body
+                    <p>http://localhost:3000/api/users/verifyemail/${token}</p>`, // html body
         });
         return info
     } catch (error) {
